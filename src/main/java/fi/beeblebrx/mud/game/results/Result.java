@@ -1,4 +1,4 @@
-package fi.beeblebrx.mud.game;
+package fi.beeblebrx.mud.game.results;
 
 public interface Result {
     byte[] toProtoBufBytes();

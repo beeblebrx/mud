@@ -1,6 +1,7 @@
 package fi.beeblebrx.mud.game;
 
 import fi.beeblebrx.mud.Api.Command.CommandType;
+import fi.beeblebrx.mud.game.results.Result;
 import fi.beeblebrx.mud.player.Player;
 
 public abstract class GameObject {

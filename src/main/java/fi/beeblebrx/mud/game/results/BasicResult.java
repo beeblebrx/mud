@@ -1,7 +1,7 @@
-package fi.beeblebrx.mud.game;
+package fi.beeblebrx.mud.game.results;
 
-import fi.beeblebrx.mud.Api;
 import fi.beeblebrx.mud.Api.Response;
+import fi.beeblebrx.mud.game.results.Result;
 
 public class BasicResult implements Result {
     private final String message;
@@ -13,6 +13,7 @@ public class BasicResult implements Result {
     public byte[] toProtoBufBytes() {
         return Response.newBuilder()
                 .setText(message)
+                .setStatus(Response.Status.SUCCESS)
                 .build()
                 .toByteArray();
     }

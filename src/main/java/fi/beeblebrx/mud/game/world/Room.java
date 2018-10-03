@@ -2,8 +2,8 @@ package fi.beeblebrx.mud.game.world;
 
 import fi.beeblebrx.mud.Api.Command.CommandType;
 import fi.beeblebrx.mud.game.GameObject;
-import fi.beeblebrx.mud.game.Result;
-import fi.beeblebrx.mud.game.RoomLookResult;
+import fi.beeblebrx.mud.game.results.Result;
+import fi.beeblebrx.mud.game.results.RoomLookResult;
 import fi.beeblebrx.mud.player.Player;
 
 import java.util.Collections;

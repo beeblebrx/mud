@@ -3,10 +3,10 @@ package fi.beeblebrx.mud.websocket;
 import com.google.inject.Inject;
 import com.google.protobuf.InvalidProtocolBufferException;
 import fi.beeblebrx.mud.Api.Command;
-import fi.beeblebrx.mud.game.BasicResult;
+import fi.beeblebrx.mud.game.results.BasicResult;
 import fi.beeblebrx.mud.game.CommandDispatcher;
 import fi.beeblebrx.mud.game.GameState;
-import fi.beeblebrx.mud.game.Result;
+import fi.beeblebrx.mud.game.results.Result;
 import fi.beeblebrx.mud.player.Player;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
@@ -46,7 +46,7 @@ public class GameSocket implements WebSocketListener {
 
     @Override
     public void onWebSocketText(String message) {
-        System.out.println("Tekstiä tuli: " + message);
+        // Not interested in text messages.
     }
 
     @Override

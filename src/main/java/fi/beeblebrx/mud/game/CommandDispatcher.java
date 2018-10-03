@@ -3,12 +3,14 @@ package fi.beeblebrx.mud.game;
 import com.google.inject.Inject;
 import fi.beeblebrx.mud.Api;
 import fi.beeblebrx.mud.Api.Command;
+import fi.beeblebrx.mud.game.results.ErrorResult;
+import fi.beeblebrx.mud.game.results.Result;
 import fi.beeblebrx.mud.game.world.GameWorld;
 import fi.beeblebrx.mud.player.Player;
 
 public class CommandDispatcher {
-    private static final Result UNKNOWN_TARGET_RESULT = new BasicResult("Unknown target.");
-    private static final Result COMMAND_NOT_ACCEPTED_RESULT = new BasicResult("huh?");
+    private static final Result UNKNOWN_TARGET_RESULT = new ErrorResult("Unknown target.");
+    private static final Result COMMAND_NOT_ACCEPTED_RESULT = new ErrorResult("huh?");
     private final GameWorld world;
     private final UntargetedCommandHandler untargetedCommandHandler;
 

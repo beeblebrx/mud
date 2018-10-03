@@ -1,6 +1,8 @@
 package fi.beeblebrx.mud.game;
 
 import fi.beeblebrx.mud.Api.Command.CommandType;
+import fi.beeblebrx.mud.game.results.ErrorResult;
+import fi.beeblebrx.mud.game.results.Result;
 import fi.beeblebrx.mud.game.world.GameWorld;
 import fi.beeblebrx.mud.player.Player;
 
@@ -12,10 +14,10 @@ public class UntargetedCommandHandler {
     public Result handle(CommandType command, Player player, GameWorld world) {
         // Command type was targeted but target wasn't set.
         if (targetedCommands.contains(command)) {
-            return new BasicResult("Command target is missing.");
+            return new ErrorResult("Command target is missing.");
         }
 
         // Nothing implemented yet.
-        return new BasicResult("huh?");
+        return new ErrorResult("huh?");
     }
 }
