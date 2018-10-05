@@ -1,49 +1,54 @@
 package fi.beeblebrx.mud.game.results;
 
 import fi.beeblebrx.mud.Api;
+import fi.beeblebrx.mud.Api.Event.EventType;
+import fi.beeblebrx.mud.Api.GameObject.Type;
 import fi.beeblebrx.mud.game.GameObject;
 import fi.beeblebrx.mud.game.world.Exit;
+import fi.beeblebrx.mud.game.world.Room;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static fi.beeblebrx.mud.Api.Response.Status.*;
 
-public class RoomLookResult implements Result {
-    private final String roomDescription;
-    private final Map<Integer, Exit> exits;
+public class RoomLookResult implements Event {
+    private final Room room;
     private final Set<GameObject> objects;
 
-    public RoomLookResult(final String roomDescription, final Map<Integer, Exit> exits,
-                          final Set<GameObject> objects) {
-        this.roomDescription = roomDescription;
-        this.exits = exits;
+    public RoomLookResult(final Room room, final Set<GameObject> objects) {
+        this.room = room;
         this.objects = objects;
     }
 
     @Override
     public byte[] toProtoBufBytes() {
-        return Api.Response.newBuilder()
-                .setText(roomDescription)
+        return Api.Event.newBuilder()
+                .setText(room.getDescription())
                 .addAllObjects(roomObjectsToList())
-                .setStatus(SUCCESS)
+                .setType(EventType.SUCCESSFUL_RESPONSE)
                 .build()
                 .toByteArray();
     }
 
     private List<Api.GameObject> roomObjectsToList() {
+        final Map<Integer, Exit> exits = this.room.getExits();
         final List<Api.GameObject> protoObjects = new ArrayList<>(exits.size() + objects.size());
 
+        protoObjects.add(Api.GameObject.newBuilder()
+            .setType(Type.ROOM)
+            .setId(room.getId())
+            .setDescription(room.getDescription())
+            .build());
         exits.values().forEach(exit -> protoObjects.add(Api.GameObject.newBuilder()
             .setId(exit.getId())
-            .setType(Api.GameObject.Type.EXIT)
+            .setType(Type.EXIT)
             .setDescription(exit.getDescription())
             .build()));
         objects.forEach(obj -> protoObjects.add(Api.GameObject.newBuilder()
             .setId(obj.getId())
-            .setType(Api.GameObject.Type.ITEM)
+            .setType(Type.ITEM)
             .setDescription(obj.getDescription())
             .build()));
 

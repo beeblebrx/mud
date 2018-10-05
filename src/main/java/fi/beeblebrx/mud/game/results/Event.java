@@ -1,5 +1,5 @@
 package fi.beeblebrx.mud.game.results;
 
-public interface Result {
+public interface Event {
     byte[] toProtoBufBytes();
 }

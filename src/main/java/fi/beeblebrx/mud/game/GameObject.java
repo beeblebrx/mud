@@ -1,7 +1,7 @@
 package fi.beeblebrx.mud.game;
 
 import fi.beeblebrx.mud.Api.Command.CommandType;
-import fi.beeblebrx.mud.game.results.Result;
+import fi.beeblebrx.mud.game.results.Event;
 import fi.beeblebrx.mud.player.Player;
 
 public abstract class GameObject {
@@ -13,7 +13,7 @@ public abstract class GameObject {
         this.description = description;
     }
 
-    public abstract Result accept(final CommandType command, final Player player);
+    public abstract Event accept(final CommandType command, final Player player);
 
     public String getDescription() {
         return description;

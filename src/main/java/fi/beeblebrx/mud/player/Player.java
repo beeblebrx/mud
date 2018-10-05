@@ -1,22 +1,22 @@
 package fi.beeblebrx.mud.player;
 
 public class Player {
-    private long id;
-    private long location;
+    private int id;
+    private int location;
 
-    public Player(final long id) {
+    public Player(final int id) {
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public long getLocation() {
+    public int getLocation() {
         return location;
     }
 
-    public void setLocation(long location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 }

@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class GameStateImpl implements GameState {
-    private ConcurrentMap<Long, Player> players;
+    private ConcurrentMap<Integer, Player> players;
 
     public GameStateImpl() {
         players = new ConcurrentHashMap();

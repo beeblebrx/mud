@@ -3,10 +3,10 @@ package fi.beeblebrx.mud.websocket;
 import com.google.inject.Inject;
 import com.google.protobuf.InvalidProtocolBufferException;
 import fi.beeblebrx.mud.Api.Command;
-import fi.beeblebrx.mud.game.results.BasicResult;
+import fi.beeblebrx.mud.game.results.BasicEvent;
 import fi.beeblebrx.mud.game.CommandDispatcher;
 import fi.beeblebrx.mud.game.GameState;
-import fi.beeblebrx.mud.game.results.Result;
+import fi.beeblebrx.mud.game.results.Event;
 import fi.beeblebrx.mud.player.Player;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
@@ -35,8 +35,8 @@ public class GameSocket implements WebSocketListener {
     public void onWebSocketBinary(byte[] payload, int offset, int len) {
         try {
             final Command command = Command.parseFrom(new ByteArrayInputStream(payload, offset, len));
-            final Result result = commandDispatcher.dispatch(command.getType(), command.getTarget(), player);
-            session.getRemote().sendBytes(ByteBuffer.wrap(result.toProtoBufBytes()));
+            final Event event = commandDispatcher.dispatch(command.getType(), command.getTarget(), player);
+            session.getRemote().sendBytes(ByteBuffer.wrap(event.toProtoBufBytes()));
         } catch (InvalidProtocolBufferException e) {
             System.err.println("Invalid protobuf: " + e.getMessage());
         } catch (IOException e) {
@@ -64,14 +64,14 @@ public class GameSocket implements WebSocketListener {
         gameState.addPlayer(player);
 
         try {
-            final byte[] gameEnterMsg = new BasicResult("You enter the game.").toProtoBufBytes();
+            final byte[] gameEnterMsg = new BasicEvent("You enter the game.").toProtoBufBytes();
             session.getRemote().sendBytes(ByteBuffer.wrap(gameEnterMsg));
             final GameObject room = GameObject.newBuilder()
                     .setType(GameObject.Type.ROOM)
                     .setId(1)
                     .build();
-            final Result result = commandDispatcher.dispatch(Command.CommandType.LOOK, room, player);
-            final byte[] protoBufBytes = result.toProtoBufBytes();
+            final Event event = commandDispatcher.dispatch(Command.CommandType.LOOK, room, player);
+            final byte[] protoBufBytes = event.toProtoBufBytes();
             session.getRemote().sendBytes(ByteBuffer.wrap(protoBufBytes));
         } catch (IOException e) {
             System.err.println("IOException: " + e.getMessage());

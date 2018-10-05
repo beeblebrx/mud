@@ -12,9 +12,15 @@ public class GameWorldImpl implements GameWorld {
     private Map<Integer, Room> rooms = new HashMap<>();
 
     public GameWorldImpl() {
-        rooms.put(1, new Room(1,"The first room", Set.of(new Exit(1, "2", 2))));
-        rooms.put(2, new Room(2,"The second room", Set.of(new Exit(2, "3", 3))));
-        rooms.put(3, new Room(3,"The third room", Set.of(new Exit(3, "1", 1))));
+        final Room first = new Room(1, "The first room");
+        final Room second = new Room(2,"The second room");
+        final Room third = new Room(3,"The third room");
+        first.setExits(Set.of(new Exit(1, "2", second)));
+        second.setExits(Set.of(new Exit(2, "3", third)));
+        third.setExits(Set.of(new Exit(3, "1", first)));
+        rooms.put(1, first);
+        rooms.put(2, second);
+        rooms.put(3, third);
     }
 
     @Override
@@ -22,7 +28,10 @@ public class GameWorldImpl implements GameWorld {
         final int id = target.getId();
         switch (target.getType()) {
             case ROOM: return rooms.get(id);
-            case EXIT: return rooms.get(player.getLocation()).getExits().get(id);
+            case EXIT:
+                final Room room = rooms.get(player.getLocation());
+                final Map<Integer, Exit> exits = room.getExits();
+                return exits.get(id);
         }
         return null;
     }
